@@ -35,6 +35,25 @@ class _MyWidgetState extends State<UserTransaction> {
     return Column(
       children: [
         NewTransaction(_addNewTransaction),
+        Center(
+          child: Container(
+            padding: const EdgeInsets.all(6),
+            margin: const EdgeInsets.all(5),
+            decoration: const BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(width: 2, color: Colors.purpleAccent))),
+            child: const Text(
+              "Recent Expenses",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.purple,
+                fontStyle: FontStyle.italic,
+              ),
+              // textAlign: TextAlign.center,
+            ),
+          ),
+        ),
         TransactionList(_userTransactions),
       ],
     );

@@ -7,6 +7,17 @@ class NewTransaction extends StatelessWidget {
   final amountController = TextEditingController();
   final Function addHandler;
 
+  void submitDate() {
+    final enteredTitle = titleController.text;
+    final eneteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || eneteredAmount < 0) {
+      return;
+    }
+
+    addHandler(titleController.text, double.parse(amountController.text));
+  }
+
   // ignore: use_key_in_widget_constructors
   NewTransaction(this.addHandler);
   @override
@@ -21,15 +32,33 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: const InputDecoration(labelText: "Title"),
               controller: titleController,
+              // onSubmitted: (_) => submitDate(),
             ),
             TextField(
               decoration: const InputDecoration(labelText: "Amount"),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitDate(),
             ),
-            FlatButton(
-              onPressed: () => addHandler(
-                  titleController.text, double.parse(amountController.text)),
-              textColor: Colors.purple,
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                  primary: Colors.purpleAccent,
+                  // ignore: prefer_const_constructors
+                  side: BorderSide(
+                    color: Colors.purple,
+                  )),
+              onPressed: submitDate,
+              child: const Text("Add Transaction"),
+            ),
+            ElevatedButton(
+              style: OutlinedButton.styleFrom(
+                  elevation: 20,
+                  // primary: Colors.purpleAccent,
+                  side: const BorderSide(
+                    color: Colors.purple,
+                  )),
+              // primary: Colors.purple,
+              onPressed: submitDate,
               child: const Text("Add Transaction"),
             ),
           ],

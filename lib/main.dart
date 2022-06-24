@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
- 
-
   final titleController = TextEditingController();
   final amoutnController = TextEditingController();
 
@@ -29,24 +27,26 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Expense Tracker"),
       ),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // ignore: avoid_unnecessary_containers
-          Container(
-            width: double.infinity,
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              elevation: 5,
-              color: Colors.blueAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2),
+      body: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // ignore: avoid_unnecessary_containers
+            Container(
+              width: double.infinity,
+              child: Card(
+                margin: const EdgeInsets.all(10),
+                elevation: 5,
+                color: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
+                ),
+                child: const Text("Here goes chart!!"),
               ),
-              child: const Text("Here goes chart!!"),
             ),
-          ),
-          const UserTransaction()
-        ],
+            const UserTransaction()
+          ],
+        ),
       ),
     );
   }
