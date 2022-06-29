@@ -51,7 +51,7 @@ class NewTransaction extends StatelessWidget {
               child: const Text("Add Transaction"),
             ),
             ElevatedButton(
-              style: OutlinedButton.styleFrom(
+              style: ElevatedButton.styleFrom(
                   elevation: 20,
                   // primary: Colors.purpleAccent,
                   side: const BorderSide(

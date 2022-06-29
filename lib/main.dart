@@ -26,6 +26,12 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Expense Tracker"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,6 +53,11 @@ class MyHomePage extends StatelessWidget {
             const UserTransaction()
           ],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }
