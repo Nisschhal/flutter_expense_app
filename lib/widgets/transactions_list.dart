@@ -14,7 +14,12 @@ class TransactionList extends StatelessWidget {
     // ignore: sized_box_for_whitespace
     return Container(
       height: 300,
-      child: ListView.builder(
+      child: userList.isEmpty? Column(
+        children: [
+          Text("No transactions yet!!"),
+          
+        ],
+      ) : ListView.builder(
         // scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Card(
@@ -44,10 +49,7 @@ class TransactionList extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(
                     userList[index].title,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Text(
                     DateFormat.yMMMd().format(userList[index].date),
