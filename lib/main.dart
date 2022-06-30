@@ -56,14 +56,14 @@ class _MyHomePageState extends State<MyHomePage> {
   final amoutnController = TextEditingController();
 
   final List<Transaction> _userTransactions = [
-    Transaction(id: "01", title: "Shoe", amount: 1200, date: DateTime.now()),
-    Transaction(id: "02", title: "Shirt", amount: 120, date: DateTime.now()),
-    Transaction(id: "03", title: "Watch", amount: 12, date: DateTime.now()),
-    Transaction(id: "04", title: "Bag", amount: 1, date: DateTime.now()),
+    // Transaction(id: "01", title: "Shoe", amount: 1200, date: DateTime.now()),
+    // Transaction(id: "02", title: "Shirt", amount: 120, date: DateTime.now()),
+    // Transaction(id: "03", title: "Watch", amount: 12, date: DateTime.now()),
+    // Transaction(id: "04", title: "Bag", amount: 1, date: DateTime.now()),
   ];
 
   void _addNewTransaction(String txTitle, double txAmount) {
-    final newTx = Transaction(
+    final newTx = Transaction( 
         id: DateTime.now().toString(),
         title: txTitle,
         amount: txAmount,
