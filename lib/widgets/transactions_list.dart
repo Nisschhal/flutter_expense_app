@@ -15,7 +15,7 @@ class TransactionList extends StatelessWidget {
     return Container(
       height: 300,
       child: ListView.builder(
-        scrollDirection: Axis.horizontal,
+        // scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Card(
             child: Row(

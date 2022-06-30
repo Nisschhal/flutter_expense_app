@@ -2,10 +2,19 @@
 
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addHandler;
+
+  NewTransaction(this.addHandler);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
 
   void submitDate() {
     final enteredTitle = titleController.text;
@@ -15,11 +24,12 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addHandler(titleController.text, double.parse(amountController.text));
+    widget.addHandler(
+        titleController.text, double.parse(amountController.text));
+
+    Navigator.of(context).pop();
   }
 
-  // ignore: use_key_in_widget_constructors
-  NewTransaction(this.addHandler);
   @override
   Widget build(BuildContext context) {
     return Card(
