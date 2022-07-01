@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/new_transaction.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -56,19 +57,40 @@ class _MyHomePageState extends State<MyHomePage> {
   final amoutnController = TextEditingController();
 
   final List<Transaction> _userTransactions = [
-    // Transaction(id: "01", title: "Shoe", amount: 1200, date: DateTime.now()),
-    // Transaction(id: "02", title: "Shirt", amount: 120, date: DateTime.now()),
-    // Transaction(id: "03", title: "Watch", amount: 12, date: DateTime.now()),
-    // Transaction(id: "04", title: "Bag", amount: 1, date: DateTime.now()),
+    Transaction(id: "01", title: "Shoe", amount: 1200, date: DateTime.now()),
+    Transaction(id: "02", title: "Shirt", amount: 120, date: DateTime.now()),
+    Transaction(id: "03", title: "Watch", amount: 12, date: DateTime.now()),
+    Transaction(id: "04", title: "Bag", amount: 1, date: DateTime.now()),
   ];
 
+  // getter, gives the recent transactions of last 7 days
+
+  List<Transaction> get _getRecentTransaction {
+    // only return the transactions from userTransactions list which passes the isAfter() test
+    return _userTransactions.where((tx) {
+      // check the each transactions from the list and if the date is equal to last 7 day from now
+      // then a transactions passes the condition and return that transaciton
+      return tx.date.isAfter(
+        // subtract the 7 days from now
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
+      );
+    }).toList(); // once the list is generated it return the where iterable value not list
+    // to make them into list use toList() same like in map iterable
+  }
+
+// create the new transaction and add it into list.
   void _addNewTransaction(String txTitle, double txAmount) {
-    final newTx = Transaction( 
+    // creates the new object/instance of the Transaction class and passes the data into parameter
+    final newTx = Transaction(
         id: DateTime.now().toString(),
         title: txTitle,
         amount: txAmount,
         date: DateTime.now());
+    // updaing the list value since it is stateful widget
     setState(() {
+      // adding the new list into the totalTransactions list
       _userTransactions.add(newTx);
       print("Working fine");
     });
@@ -78,9 +100,14 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
         context: context,
         builder: (_) {
+          // making sure that only certain type of gesture or tap/touch works in the particular widget
+
           return GestureDetector(
             onTap: () {},
+            // wigets inside the showModalBottonSheet()
+            // it passes the _addNewTransaction fuction address which gets triger when task is compeleted
             child: NewTransaction(_addNewTransaction),
+            // makinc sure that on the widgets nothing happes when touch/tap however, if touched/tapped outside the widget it gets closed
             behavior: HitTestBehavior.opaque,
           );
         });
@@ -103,18 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // ignore: avoid_unnecessary_containers
-            Container(
-              width: double.infinity,
-              child: Card(
-                margin: const EdgeInsets.all(10),
-                elevation: 5,
-                color: Colors.blueAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                child: const Text("Here goes chart!!"),
-              ),
-            ),
+            Chart(_getRecentTransaction),
             Center(
               child: Container(
                 padding: const EdgeInsets.all(6),
