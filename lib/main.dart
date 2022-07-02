@@ -21,9 +21,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         accentColor: Colors.blue[50],
         // fontFamily: 'OpenSans',
+        // textTheme: ThemeData.light().textTheme.copyWith(
+        //       headline6: const TextStyle(
+        //         fontFamily: 'OpenSans',
+        //         fontSize: 18,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: const TextStyle(
-                fontFamily: 'OpenSans',
+                fontFamily: "OpenSans",
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -57,10 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final amoutnController = TextEditingController();
 
   final List<Transaction> _userTransactions = [
-    Transaction(id: "01", title: "Shoe", amount: 1200, date: DateTime.now()),
-    Transaction(id: "02", title: "Shirt", amount: 120, date: DateTime.now()),
-    Transaction(id: "03", title: "Watch", amount: 12, date: DateTime.now()),
-    Transaction(id: "04", title: "Bag", amount: 1, date: DateTime.now()),
+    // Transaction(id: "01", title: "Shoe", amount: 1200, date: DateTime.now()),
+    // Transaction(id: "02", title: "Shirt", amount: 120, date: DateTime.now()),
+    // Transaction(id: "03", title: "Watch", amount: 12, date: DateTime.now()),
+    // Transaction(id: "04", title: "Bag", amount: 1, date: DateTime.now()),
   ];
 
   // getter, gives the recent transactions of last 7 days
@@ -81,13 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 // create the new transaction and add it into list.
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(String txTitle, double txAmount, DateTime dateTime) {
     // creates the new object/instance of the Transaction class and passes the data into parameter
     final newTx = Transaction(
         id: DateTime.now().toString(),
         title: txTitle,
         amount: txAmount,
-        date: DateTime.now());
+        date: dateTime);
     // updaing the list value since it is stateful widget
     setState(() {
       // adding the new list into the totalTransactions list

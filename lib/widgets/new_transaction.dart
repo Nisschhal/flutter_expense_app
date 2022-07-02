@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addHandler;
@@ -12,6 +13,7 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
+  DateTime? _selectedDate;
   final titleController = TextEditingController();
 
   final amountController = TextEditingController();
@@ -20,14 +22,30 @@ class _NewTransactionState extends State<NewTransaction> {
     final enteredTitle = titleController.text;
     final eneteredAmount = double.parse(amountController.text);
 
-    if (enteredTitle.isEmpty || eneteredAmount < 0) {
+    if (enteredTitle.isEmpty || eneteredAmount < 0 || _selectedDate == null) {
       return;
     }
 
     widget.addHandler(
-        titleController.text, double.parse(amountController.text));
+        titleController.text, double.parse(amountController.text), _selectedDate);
 
     Navigator.of(context).pop();
+  }
+
+  void _showDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2021),
+            lastDate: DateTime.now())
+        .then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -49,6 +67,22 @@ class _NewTransactionState extends State<NewTransaction> {
               controller: amountController,
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitDate(),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(_selectedDate == null
+                      ? "No Date choosen"
+                      : "Picked Date: ${DateFormat.yMd().format(_selectedDate!)}"),
+                ),
+                TextButton(
+                  // style: OutlinedButton.styleFrom(
+                  //     side: BorderSide(color: Theme.of(context).primaryColor)),
+                  onPressed: _showDatePicker,
+                  child: Text("Choose a Date",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ],
             ),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
