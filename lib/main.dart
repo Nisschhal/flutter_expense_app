@@ -129,43 +129,57 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text("Expense Tracker"),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => _startNewTransaction(context),
+        ),
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Expense Tracker"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _startNewTransaction(context),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // ignore: avoid_unnecessary_containers
-            Chart(_getRecentTransaction),
-            Center(
-              child: Container(
-                padding: const EdgeInsets.all(6),
-                margin: const EdgeInsets.all(5),
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom:
-                            BorderSide(width: 2, color: Colors.purpleAccent))),
-                child: const Text(
-                  "Recent Expenses",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.purple,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  // textAlign: TextAlign.center,
-                ),
-              ),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.25,
+              child: Chart(_getRecentTransaction),
             ),
-            TransactionList(_userTransactions, _deleteTransactions),
+            // Center(
+            //   child: Container(
+            //     padding: const EdgeInsets.all(6),
+            //     margin: const EdgeInsets.all(5),
+            //     decoration: const BoxDecoration(
+            //         border: Border(
+            //             bottom:
+            //                 BorderSide(width: 2, color: Colors.purpleAccent))),
+            //     child: const Text(
+            //       "Recent Expenses",
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.purple,
+            //         fontStyle: FontStyle.italic,
+            //       ),
+            //       // textAlign: TextAlign.center,
+            //     ),
+            //   ),
+            // ),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.75,
+                child: Container(
+                    child: TransactionList(
+                        _userTransactions, _deleteTransactions))),
           ],
         ),
       ),
