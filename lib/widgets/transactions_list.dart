@@ -34,45 +34,19 @@ class TransactionList extends StatelessWidget {
               // scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 80,
-                        padding: const EdgeInsets.all(2),
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.purple,
-                            width: 2,
-                          ),
-                        ),
-                        child: Text(
-                          "Rs.${userList[index].amount.toStringAsFixed(0)}",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.purple,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              userList[index].title,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            Text(
-                              DateFormat.yMMMd().format(userList[index].date),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ]),
-                    ],
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                          padding: EdgeInsets.all(6),
+                          child: FittedBox(
+                              child: Text("\$${userList[index].amount}"))),
+                    ),
+                    title: Text("\$${userList[index].title}"),
+                    subtitle:
+                        Text(DateFormat.yMMMd().format(userList[index].date)),
                   ),
                 );
               },
