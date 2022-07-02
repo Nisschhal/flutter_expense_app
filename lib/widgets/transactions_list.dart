@@ -14,21 +14,23 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: sized_box_for_whitespace
     return userList.isEmpty
-        ? Column(
-            children: [
-              Text(
-                "No transactions yet!!",
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                  height: 200,
-                  child: Image.asset('assets/images/waiting.png',
-                      fit: BoxFit.cover)),
-            ],
-          )
+        ? LayoutBuilder(builder: (context, constraints) {
+            return Column(
+              children: [
+                Text(
+                  "No transactions yet!!",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset('assets/images/waiting.png',
+                        fit: BoxFit.cover)),
+              ],
+            );
+          })
         : ListView.builder(
             // scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
