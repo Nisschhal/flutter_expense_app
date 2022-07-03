@@ -26,8 +26,8 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    widget.addHandler(
-        titleController.text, double.parse(amountController.text), _selectedDate);
+    widget.addHandler(titleController.text, double.parse(amountController.text),
+        _selectedDate);
 
     Navigator.of(context).pop();
   }
@@ -52,60 +52,67 @@ class _NewTransactionState extends State<NewTransaction> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              decoration: const InputDecoration(labelText: "Title"),
-              controller: titleController,
-              // onSubmitted: (_) => submitDate(),
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: "Amount"),
-              controller: amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitDate(),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(_selectedDate == null
-                      ? "No Date choosen"
-                      : "Picked Date: ${DateFormat.yMd().format(_selectedDate!)}"),
-                ),
-                TextButton(
-                  // style: OutlinedButton.styleFrom(
-                  //     side: BorderSide(color: Theme.of(context).primaryColor)),
-                  onPressed: _showDatePicker,
-                  child: Text("Choose a Date",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ],
-            ),
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                  primary: Colors.purpleAccent,
-                  // ignore: prefer_const_constructors
-                  side: BorderSide(
-                    color: Colors.purple,
-                  )),
-              onPressed: submitDate,
-              child: const Text("Add Transaction"),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  elevation: 20,
-                  // primary: Colors.purpleAccent,
-                  side: const BorderSide(
-                    color: Colors.purple,
-                  )),
-              // primary: Colors.purple,
-              onPressed: submitDate,
-              child: const Text("Add Transaction"),
-            ),
-          ],
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            right: 10,
+            left: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                decoration: const InputDecoration(labelText: "Title"),
+                controller: titleController,
+                // onSubmitted: (_) => submitDate(),
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: "Amount"),
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => submitDate(),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(_selectedDate == null
+                        ? "No Date choosen"
+                        : "Picked Date: ${DateFormat.yMd().format(_selectedDate!)}"),
+                  ),
+                  TextButton(
+                    // style: OutlinedButton.styleFrom(
+                    //     side: BorderSide(color: Theme.of(context).primaryColor)),
+                    onPressed: _showDatePicker,
+                    child: Text("Choose a Date",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    primary: Colors.purpleAccent,
+                    // ignore: prefer_const_constructors
+                    side: BorderSide(
+                      color: Colors.purple,
+                    )),
+                onPressed: submitDate,
+                child: const Text("Add Transaction"),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    elevation: 20,
+                    // primary: Colors.purpleAccent,
+                    side: const BorderSide(
+                      color: Colors.purple,
+                    )),
+                // primary: Colors.purple,
+                onPressed: submitDate,
+                child: const Text("Add Transaction"),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -2,7 +2,6 @@
 
 import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/new_transaction.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'models/transaction.dart';
@@ -131,6 +130,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: const Text("Expense Tracker"),
       actions: [
@@ -140,6 +142,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+    final txtList = Container(
+        height: (MediaQuery.of(context).size.height -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top) *
+            0.75,
+        child: Container(
+            child: TransactionList(_userTransactions, _deleteTransactions)));
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -147,58 +156,70 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // ignore: avoid_unnecessary_containers
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Show Chart:"),
-                Switch(
-                  value: _showChart,
-                  onChanged: (val) {
-                    setState(() {
-                      _showChart = !_showChart;
-                    });
-                  },
-                ),
-              ],
-            ),
 
-            _showChart
-                ? Container(
+            // if the orientation is in landscape
+            if (isLandScape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Show Chart:"),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = !_showChart;
+                      });
+                    },
+                  ),
+                ],
+              ),
+
+            // if the device is not in landscape
+            if (!isLandScape)
+              Center(
+                  child: Column(
+                children: [
+                  Container(
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height -
                             MediaQuery.of(context).padding.top) *
                         0.25,
                     child: Chart(_getRecentTransaction),
-                  )
-                :
-                // Center(
-                //   child: Container(
-                //     padding: const EdgeInsets.all(6),
-                //     margin: const EdgeInsets.all(5),
-                //     decoration: const BoxDecoration(
-                //         border: Border(
-                //             bottom:
-                //                 BorderSide(width: 2, color: Colors.purpleAccent))),
-                //     child: const Text(
-                //       "Recent Expenses",
-                //       style: TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.bold,
-                //         color: Colors.purple,
-                //         fontStyle: FontStyle.italic,
-                //       ),
-                //       // textAlign: TextAlign.center,
-                //     ),
-                //   ),
-                // ),
-                Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.75,
-                    child: Container(
-                        child: TransactionList(
-                            _userTransactions, _deleteTransactions))),
+                  ),
+                  txtList
+                ],
+              )),
+
+            if (isLandScape)
+              _showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: Chart(_getRecentTransaction),
+                    )
+                  : txtList,
+            // Center(
+            //   child: Container(
+            //     padding: const EdgeInsets.all(6),
+            //     margin: const EdgeInsets.all(5),
+            //     decoration: const BoxDecoration(
+            //         border: Border(
+            //             bottom:
+            //                 BorderSide(width: 2, color: Colors.purpleAccent))),
+            //     child: const Text(
+            //       "Recent Expenses",
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.purple,
+            //         fontStyle: FontStyle.italic,
+            //       ),
+            //       // textAlign: TextAlign.center,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -210,3 +231,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
++
