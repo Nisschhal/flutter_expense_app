@@ -18,6 +18,8 @@ class _NewTransactionState extends State<NewTransaction> {
 
   final amountController = TextEditingController();
 
+
+// function to submit the textFields data to the handler function which then execute the refereced funciton using the given arugments. 
   void submitDate() {
     final enteredTitle = titleController.text;
     final eneteredAmount = double.parse(amountController.text);
@@ -29,9 +31,12 @@ class _NewTransactionState extends State<NewTransaction> {
     widget.addHandler(titleController.text, double.parse(amountController.text),
         _selectedDate);
 
+// once the data is eneted then close the widgets
     Navigator.of(context).pop();
   }
 
+
+// function to pop up a calender
   void _showDatePicker() {
     showDatePicker(
             context: context,
