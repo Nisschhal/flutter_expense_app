@@ -128,10 +128,58 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool _showChart = false;
 
+  List<Widget> _buildLandscapeContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txtList) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Show Chart:"),
+          Switch(
+            value: _showChart,
+            onChanged: (val) {
+              setState(() {
+                _showChart = !_showChart;
+              });
+            },
+          ),
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.7,
+              child: Chart(_getRecentTransaction),
+            )
+          : txtList,
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txtList) {
+    return [
+      Center(
+          child: Column(
+        children: [
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context).padding.top) *
+                0.25,
+            child: Chart(_getRecentTransaction),
+          ),
+          txtList
+        ],
+      )),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final isLandScape = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text("Expense Tracker"),
@@ -143,9 +191,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     final txtList = Container(
-        height: (MediaQuery.of(context).size.height -
+        height: (mediaQuery.size.height -
                 appBar.preferredSize.height -
-                MediaQuery.of(context).padding.top) *
+                mediaQuery.padding.top) *
             0.75,
         child: Container(
             child: TransactionList(_userTransactions, _deleteTransactions)));
@@ -159,47 +207,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
             // if the orientation is in landscape
             if (isLandScape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Show Chart:"),
-                  Switch(
-                    value: _showChart,
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = !_showChart;
-                      });
-                    },
-                  ),
-                ],
-              ),
+              ..._buildLandscapeContent(mediaQuery, appBar, txtList),
 
             // if the device is not in landscape
             if (!isLandScape)
-              Center(
-                  child: Column(
-                children: [
-                  Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.25,
-                    child: Chart(_getRecentTransaction),
-                  ),
-                  txtList
-                ],
-              )),
+              ..._buildPortraitContent(mediaQuery, appBar, txtList),
 
-            if (isLandScape)
-              _showChart
-                  ? Container(
-                      height: (MediaQuery.of(context).size.height -
-                              appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
-                          0.7,
-                      child: Chart(_getRecentTransaction),
-                    )
-                  : txtList,
             // Center(
             //   child: Container(
             //     padding: const EdgeInsets.all(6),
@@ -231,4 +244,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-+
